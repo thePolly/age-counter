@@ -11,7 +11,7 @@ function App() {
   const [ageInYears, setAgeInYears] = useState("0.0000000000");
   const [isConfirmed, setIsConfirmed] = useState(false);
 
-  // 🎨 Стили
+
   const styles = {
     container: {
       textAlign: "center",
@@ -31,9 +31,11 @@ function App() {
       marginTop: "20px",
       marginBottom: "20px",
     },
+    h1: {
+      marginBottom: "10vh" ,
+    }
   };
 
-  // 🕒 Функция для установки времени (06:00, 12:00, 18:00)
   const getApproximateTime = (category) => {
     switch (category) {
       case "morning":
@@ -41,11 +43,10 @@ function App() {
       case "evening":
         return "T18:00";
       default:
-        return "T12:00"; // Если не знает — ставим 12:00 дня
+        return "T12:00"; 
     }
   };
 
-  // 🔄 Обновляем возраст в реальном времени
   useEffect(() => {
     if (!birthDate) return;
 
@@ -58,13 +59,13 @@ function App() {
       const ageInYears = (
         ageInMilliseconds /
         (1000 * 60 * 60 * 24 * 365.25)
-      ).toFixed(10); // 10 знаков
+      ).toFixed(10); 
 
       setAgeInYears(ageInYears);
     };
 
     calculateAge();
-    const interval = setInterval(calculateAge, 50); // Обновляем каждые 50 мс (20 раз в секунду)
+    const interval = setInterval(calculateAge, 50); 
     return () => clearInterval(interval);
   }, [birthDate, timeCategory]);
 
@@ -74,11 +75,13 @@ function App() {
  
       {isConfirmed ? (
         <>
+          <h1>Your age is</h1>
           <Button text="Change Date" isPrimary isFloating onClick={() => setIsConfirmed(false)} />
           <AgeDisplay age={ageInYears} />
         </>
       ) : (
         <>
+          <h1>Select your date and time of birth</h1>
           <DateSelector birthDate={birthDate} setBirthDate={setBirthDate} />
           <div style={styles.buttonGroup}>
             <Button text="Morning" isActive={timeCategory === "morning"} onClick={() => setTimeCategory("morning")} />
